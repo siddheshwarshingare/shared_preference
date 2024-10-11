@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shared_preference/home_screen.dart';
+import 'package:shared_preference/login_scree_demo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -30,10 +31,16 @@ class _LoginScreenState extends State<LoginScreen> {
     passWord = await prefs.getString("password");
     print("object===========$userName");
     print("object===========$passWord");
+
+    setState(() {
+      userName = prefs.getString("username");
+      passWord = prefs.getString("password");
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    // print("object");
     return Scaffold(
       backgroundColor: Colors.deepOrange,
       appBar: AppBar(
@@ -60,7 +67,18 @@ class _LoginScreenState extends State<LoginScreen> {
         children: [
           const Text("Login sucseesfully.........."),
           Center(child: Text("Usename : ${userName.toString()}")),
-          Center(child: Text("Password : ${passWord.toString()}"))
+          Center(child: Text("Password : ${passWord.toString()}")),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => LoginScreeDemo(
+                              userNeme: userName.toString(),
+                              passWord: passWord.toString(),
+                            )));
+              },
+              child: Text("NextScreen"))
         ],
       ),
     );
